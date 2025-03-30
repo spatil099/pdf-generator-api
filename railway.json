@@ -1,7 +1,12 @@
 {
+  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "maven",
-    "buildCommand": "mvn clean package -DskipTests",
-    "runCommand": "java -jar target/*.jar"
+    "builder": "NIXPACKS",
+    "buildCommand": "mvn clean package -DskipTests -Dmaven.test.skip=true",
+    "runCommand": "java -Djdk.tls.client.protocols=TLSv1.2 -jar target/*.jar"
+  },
+  "deploy": {
+    "startCommand": "java -Djdk.tls.client.protocols=TLSv1.2 -jar target/*.jar",
+    "healthcheckPath": "/actuator/health"
   }
 }

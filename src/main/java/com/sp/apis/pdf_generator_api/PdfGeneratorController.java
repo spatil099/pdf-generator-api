@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @RequestMapping("/api/v1")
 @Tag(name = "PDF API", description = "Generate PDFs from text")
-public class PdfController {
+public class PdfGeneratorController {
 
   @Operation(summary = "Generate PDF")
   @ApiResponses(value = {

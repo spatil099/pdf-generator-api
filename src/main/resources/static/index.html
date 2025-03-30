@@ -1,86 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Generator API</title>
+    <title>PDF Generator API - Pricing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --gray-100: #f3f4f6;
+            --gray-800: #1f2937;
+        }
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            color: var(--gray-800);
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
         }
-
-        textarea {
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .pricing-tier {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .pricing-tier:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .tier-header {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tier-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+        }
+        .tier-price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        .price-period {
+            font-size: 1rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+        .tier-features {
+            margin-bottom: 2rem;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .feature-icon {
+            margin-right: 0.75rem;
+            color: var(--primary);
+        }
+        .btn {
+            display: inline-block;
             width: 100%;
-            height: 200px;
-            margin: 10px 0;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-
-        button {
-            background: #4CAF50;
+        .btn-primary {
+            background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px 15px;
-            cursor: pointer;
         }
-
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover {
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        .highlight {
+            position: relative;
+        }
+        .highlight::before {
+            content: "Popular";
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+        }
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
-
 <body>
-    <h1>PDF Generator API</h1>
-    <p>Convert text to PDF instantly:</p>
+    <div class="container">
+        <header>
+            <h1>Flexible Pricing for Every Need</h1>
+            <p class="subtitle">Generate PDFs effortlessly with our API. Start for free, upgrade as you grow.</p>
+        </header>
 
-    <textarea id="textInput" placeholder="Enter text here..."></textarea>
-    <br>
-    <input type="text" id="filename" placeholder="Filename (optional)" value="document">
-    <button onclick="generatePdf()">Generate PDF</button>
+        <div class="pricing-grid">
+            <!-- Free Tier -->
+            <div class="pricing-tier">
+                <div class="tier-header">
+                    <h3 class="tier-name">Starter</h3>
+                    <p class="tier-price">$0<span class="price-period">/month</span></p>
+                </div>
+                <div class="tier-features">
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>50 PDFs/month</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Basic text-to-PDF</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Community support</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✗</span>
+                        <span>HTML support</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✗</span>
+                        <span>Priority support</span>
+                    </div>
+                </div>
+                <button class="btn btn-outline" onclick="stripeCheckout('free')">Get Started</button>
+            </div>
 
-    <div id="result"></div>
+            <!-- Basic Tier (Recommended) -->
+            <div class="pricing-tier highlight">
+                <div class="tier-header">
+                    <h3 class="tier-name">Basic</h3>
+                    <p class="tier-price">$10<span class="price-period">/month</span></p>
+                </div>
+                <div class="tier-features">
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>1,000 PDFs/month</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Text/JSON input</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Email support</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✗</span>
+                        <span>HTML support</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✗</span>
+                        <span>Priority support</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="stripeCheckout('price_123')">Start 7-Day Trial</button>
+            </div>
+
+            <!-- Pro Tier -->
+            <div class="pricing-tier">
+                <div class="tier-header">
+                    <h3 class="tier-name">Pro</h3>
+                    <p class="tier-price">$49<span class="price-period">/month</span></p>
+                </div>
+                <div class="tier-features">
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Unlimited PDFs</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>HTML/CSS support</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>PDF merging</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Custom templates</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Priority support (1h)</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="stripeCheckout('price_456')">Get Pro</button>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; color: #6b7280;">
+            <p>Need custom limits or enterprise features? <a href="mailto:sales@yourdomain.com">Contact us</a></p>
+        </div>
+    </div>
 
     <script>
-        async function generatePdf() {
-            const text = document.getElementById('textInput').value;
-            const filename = document.getElementById('filename').value || 'document';
-            const resultDiv = document.getElementById('result');
-
-            try {
-                const response = await fetch('/api/v1/generate?filename=' + encodeURIComponent(filename), {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: text
-                });
-
-                if (response.ok) {
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    resultDiv.innerHTML = `
-                        <a href="${url}" download="${filename}.pdf">
-                            Download PDF
-                        </a> | 
-                        <a href="${url}" target="_blank">
-                            View in Browser
-                        </a>
-                    `;
-                } else {
-                    const error = await response.json();
-                    resultDiv.innerHTML = `Error: ${error.message}`;
-                }
-            } catch (e) {
-                resultDiv.innerHTML = `Network error: ${e.message}`;
+        const stripe = Stripe('pk_test_your_publishable_key_here'); // Replace with your key
+        
+        function stripeCheckout(priceId) {
+            if (priceId === 'free') {
+                window.location.href = 'https://your-api.com/signup';
+                return;
             }
+
+            stripe.redirectToCheckout({
+                lineItems: [{ price: priceId, quantity: 1 }],
+                mode: 'subscription',
+                successUrl: 'https://your-api.com/success?session_id={CHECKOUT_SESSION_ID}',
+                cancelUrl: 'https://your-api.com/pricing',
+                customerEmail: 'auto-fill@example.com' // Optional: Pre-fill email
+            }).then(function(result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
         }
     </script>
 </body>
-
 </html>

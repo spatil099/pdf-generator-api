@@ -1,0 +1,7 @@
+{
+  "build": {
+    "builder": "maven",
+    "buildCommand": "mvn clean package -DskipTests",
+    "runCommand": "java -jar target/*.jar"
+  }
+}

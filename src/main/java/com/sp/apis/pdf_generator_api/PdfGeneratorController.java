@@ -7,6 +7,10 @@ import org.apache.pdfbox.pdmodel.font.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import java.io.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v1")

@@ -1,6 +1,6 @@
 package com.sp.apis.pdf_generator_api;
 
-import com.example.pdfapi.dto.ErrorResponse;
+import com.sp.apis.pdf_generator_api.config.dto.ErrorResponse;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
